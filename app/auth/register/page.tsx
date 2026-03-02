@@ -12,6 +12,8 @@ export default function Register(){
                 <input type="email" id="email" name="email"></input>
                 <label htmlFor="password">Password:</label>
                 <input type="password" id="password" name="password"></input>
+                <label htmlFor="password">Re-enter Password:</label>
+                <input type="password" id="password" name="password"></input>
             </form>
         </main>
     )
