@@ -8,8 +8,8 @@ export default function Navbar(){
                <li><Link href="/" className="hover:text-gray-300">Home</Link></li>
                <li><Link href="/about" className="hover:text-gray-300">About</Link></li>
                <li><Link href="/games" className="hover:text-gray-300">Games</Link></li>
-               <li><Link href="auth/register" className="hover:text-gray-300">Register</Link></li>
-               <li><Link href="auth/login" className="hover:text-gray-300">Login</Link></li>
+               <li><Link href="/auth/register" className="hover:text-gray-300">Register</Link></li>
+               <li><Link href="/auth/login" className="hover:text-gray-300">Login</Link></li>
            </ul>
        </nav>
     )
