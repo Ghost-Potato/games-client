@@ -1,16 +1,17 @@
 'use client';
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Game } from "@/types/game";
 
-export default function CreateGame(){
+export default function EditGameForm({game} : {game: Game}){
     //instantiate router for redirecting after successful save
     const router = useRouter();
     //state vars
-    const [title, setTitle] = useState<string>('');
-    const [developer, setDeveloper] = useState<string>('');
-    const [genre, setGenre] = useState<string>('');
-    const [price, setPrice] = useState<string>('');
-    const [rating, setRating] = useState<string>('');
+    const [title, setTitle] = useState<string>(game.title || ''); //can leave out the || for required items
+    const [developer, setDeveloper] = useState<string>(game.developer || '');
+    const [genre, setGenre] = useState<string>(game.genre || '');
+    const [price, setPrice] = useState<string>(game.price?.toString || '');
+    const [rating, setRating] = useState<string>(game.rating ||'');
 
     //state var key/val dictionary of validation errors inform
     const [errors, setErrors] = useState<Record<string,string>>({});
@@ -51,15 +52,15 @@ export default function CreateGame(){
         }
         else{
             //cal/ route 
-            const res: Response = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL}/api/games`, {
-                method: 'POST',
+            const res: Response = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL}/api/games/${game._id}`, {
+                method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     title, developer, genre, price : price ? parseFloat(price) : null, rating
                 })
             });
             if (!res.ok){
-                alert('Failed to save game');
+                alert('Failed to update game');
             }
 
             //refresh games list
@@ -97,7 +98,7 @@ export default function CreateGame(){
                     <input name="rating" id="rating" value={rating} onChange={(e) => setRating(e.target.value)}/>
                     {errors.rating && <span className="error">{errors.rating}</span>}
                 </fieldset>
-                <button>Save</button>
+                <button>Update</button>
             </form>
         </main>
     )

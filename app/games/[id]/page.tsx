@@ -1,4 +1,6 @@
 import { Game } from "@/types/game";
+import DeleteGameButton from "@/app/components/deleteGameButton";
+import Link from "next/link";
 
 // call route which calls api to fetch game data
 async function getGame(id: string): Promise<Game> {
@@ -23,6 +25,7 @@ export default async function GameDetails({ params } : {params: Promise<{ id: st
                     <p>{game.genre}</p>
                     <p>{game.price}</p>
                     <p>Rating: {game.rating}</p>
+                    <Link href={`/games/edit/${game._id}`} className="linkButton">Edit</Link>
                 </article>
             </main>
         );
