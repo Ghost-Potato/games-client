@@ -61,7 +61,36 @@ h3 {
  margin: 1rem;     
 }
 
-button {
+button:hover {
+ background-color: #1e40af;
+ cursor: pointer;
+}
+
+input, textarea {
+ border: 1px solid;
+ border-color: grey;
+ width: 450px;
+ border-radius: 0.25rem;
+}
+
+input.focus textarea.focus  {
+ box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.5);
+}
+
+textarea, .rte {
+ height: 300px;
+}
+
+label {
+ width: 200px;
+ display: block;
+}
+
+fieldset {
+ margin-bottom: 10px;
+}
+ /* add linkButton custom class to standard button style */
+button, .linkButton {
  background-color: #3b82f6;
  color: #ffffff;
  font-weight: 700;
@@ -71,9 +100,15 @@ button {
  padding-left: 1rem;
  padding-right: 1rem;
  border: none;
+ margin: 2rem;
+}
+.error {
+  color: firebrick;
+  font-weight: 600;
+  margin: 2px;
 }
 
-button:hover {
- background-color: #1e40af;
- cursor: pointer;
+button.delete {
+  background-color: firebrick;
+  color: white;
 }

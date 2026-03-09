@@ -13,7 +13,7 @@ export default function Register(){
                 <label htmlFor="password">Password:</label>
                 <input type="password" id="password" name="password"></input>
                 <label htmlFor="password">Re-enter Password:</label>
-                <input type="password" id="password" name="password"></input>
+                <input type="password" id="confirmPassword" name="confirmPassword"></input>
             </form>
         </main>
     )
