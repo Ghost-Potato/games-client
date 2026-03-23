@@ -49,6 +49,7 @@ export default function Register(){
                 <input type="password" id="confirmPassword" name="confirmPassword"value= {confirm} onChange={(e) => setConfirm(e.target.value)}></input>
                 {errors.confirm && <span className="error">{errors.confirm}</span>}
             </form>
+            <button>Register</button>
         </main>
     )
 }
