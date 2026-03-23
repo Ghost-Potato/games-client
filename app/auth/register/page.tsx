@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 
 export default function Register(){
-    const router = useRouter;
+    const router = useRouter();
     //state vars
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -33,6 +33,21 @@ export default function Register(){
     const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
         if(!validate()) return;
+
+        //form valid
+        const res: Response = await fetch (`${process.env.NEXT_PUBLIC_CLIENT_URL}/api/auth/register`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({username, password})
+        });
+
+        if(!res.ok){
+            alert(res.text());
+            return;
+        }
+
+        //ok => login
+        router.push('/auth/login');
     }
 
     return(

@@ -37,7 +37,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     // get request body
     const body = await req.json();
 
-    // call delete with id on server api
+    // call update with id on server api
     const res: Response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/games/${id}`, { 
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
