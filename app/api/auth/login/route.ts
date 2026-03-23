@@ -16,5 +16,15 @@ export async function POST (req: Request) {
         console.log(`Login error: ${errorText}`);
         return new Response(errorText, { status: res.status});
     }
-    return Response.json({ success: true});
+
+    //api call succeeds and returns 200, plus header containing our cookie jwt
+    //need to pass cookie to client so we have it for private API calls
+    const setCookieHeader = res.headers.get('set-cookie');
+    const responseHeaders = new Headers();
+
+    if(setCookieHeader){
+        responseHeaders.set('Set-Cookie', setCookieHeader);
+    }
+
+    return Response.json({ success: true }, { headers: responseHeaders });
 }

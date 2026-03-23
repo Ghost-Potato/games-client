@@ -18,9 +18,17 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
     // read id from url params
     const { id } = await params;
 
+    // get cookie w/jwt
+    const cookieHeader: string = req.headers.get('cookie') || '';
+
     // call delete with id on server api
     const res: Response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/games/${id}`,
-        { method: 'DELETE' }
+        {
+            method: 'DELETE',
+            headers: {
+                Cookie: cookieHeader
+            }
+        }
     );
 
     // error handle
@@ -37,10 +45,16 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     // get request body
     const body = await req.json();
 
+    //get cooke w/jwt
+    const cookieHeader: string = req.headers.get('cookie') || '';
+
     // call update with id on server api
     const res: Response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/games/${id}`, { 
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'Cookie': cookieHeader
+        },
         body: JSON.stringify(body)
     });
 

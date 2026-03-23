@@ -17,10 +17,16 @@ export async function POST(req: Request) {
     // read request body as json
     const body = await req.json();
 
+      // get cookie w/jwt
+    const cookieHeader: string = req.headers.get('cookie') || '';
+
     // call server api
     const res: Response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/games`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'Cookie': cookieHeader
+         },
         body: JSON.stringify(body)
     });
 
