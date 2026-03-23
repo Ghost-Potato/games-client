@@ -1,4 +1,4 @@
-export async function register (req: Request) {
+export async function POST (req: Request) {
     //get credientials from form request
     const body = await req.json();
 
