@@ -2,6 +2,14 @@
 export async function GET() {
     // make get req to fetch all games from express api.  read domain from env var
     const res: Response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/games`);
+
+    //api call fails
+    if (!res.ok) {
+        const errorText = await res.text();
+        console.log(`API GET Error: ${errorText}`);
+        return new Response(errorText, { status: res.status });
+    }
+
     return Response.json(await res.json());
 };
 
