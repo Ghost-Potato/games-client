@@ -1,6 +1,9 @@
 import { Game } from "@/types/game";
 import Link from "next/link";
 
+//skip pre-rendering to fix Vercel bug
+export const dynamic = 'force-dynamic';
+
 async function getGames(): Promise<Game[]> {
      // use router to call server api
     const res: Response = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL}/api/games`);
