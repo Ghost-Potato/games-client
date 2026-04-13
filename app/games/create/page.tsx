@@ -55,7 +55,7 @@ export default function CreateGame(){
         }
         else{
             //cal/ route 
-            const res: Response = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL}/api/games`, {
+            const res: Response = await fetch('/api/games', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({

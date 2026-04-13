@@ -4,9 +4,10 @@ import EditGameForm from "@/app/components/editGameForm";
 export default async function EditGamePage({params}: {params: {id: string}}) {
     //read url from params
     const {id} = params;
+    const clientBaseUrl = (process.env.NEXT_PUBLIC_CLIENT_URL || 'http://localhost:3000').replace(/\/$/, '');
 
     //fetch game
-    const res: Response = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL}/api/games/${id}`);
+    const res: Response = await fetch(`${clientBaseUrl}/api/games/${id}`);
 
     if(!res.ok){
         return (<div>Game Not Found</div>);

@@ -12,7 +12,7 @@ export default function DeleteGameButton({id}: {id: string}) {
         }
         else{
             //call api here
-            const res: Response = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL}/api/games/${id}`, {
+            const res: Response = await fetch(`/api/games/${id}`, {
                 method: 'DELETE'
             });
             if (!res.ok){

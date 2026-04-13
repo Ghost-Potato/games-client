@@ -1,10 +1,11 @@
 // GET: /api/games/:id => fetch single game
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
+    const serverBaseUrl = (process.env.SERVER_URL || process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:4000').replace(/\/$/, '');
     // read id from url params
     const { id } = await params;
 
     // call get with id on server api
-    const res: Response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/games/${id}`);
+    const res: Response = await fetch(`${serverBaseUrl}/api/v1/games/${id}`);
 
     // error handle
     if (!res.ok) throw new Error('Failed to fetch game');
@@ -15,6 +16,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 
 // DELETE: /api/games/:id => delete selected game
 export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
+    const serverBaseUrl = (process.env.SERVER_URL || process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:4000').replace(/\/$/, '');
     // read id from url params
     const { id } = await params;
 
@@ -22,7 +24,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
     const cookieHeader: string = req.headers.get('cookie') || '';
 
     // call delete with id on server api
-    const res: Response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/games/${id}`,
+    const res: Response = await fetch(`${serverBaseUrl}/api/v1/games/${id}`,
         {
             method: 'DELETE',
             headers: {
@@ -39,6 +41,7 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
 
 // PUT: /api/games/:id => update selected game
 export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
+    const serverBaseUrl = (process.env.SERVER_URL || process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:4000').replace(/\/$/, '');
     // read id from url params
     const { id } = await params;
 
@@ -49,7 +52,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
     const cookieHeader: string = req.headers.get('cookie') || '';
 
     // call update with id on server api
-    const res: Response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/games/${id}`, { 
+    const res: Response = await fetch(`${serverBaseUrl}/api/v1/games/${id}`, { 
         method: 'PUT',
         headers: { 
             'Content-Type': 'application/json',

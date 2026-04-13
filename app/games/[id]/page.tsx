@@ -5,7 +5,8 @@ import { AuthCheck } from "@/app/components/authCheck";
 
 // call route which calls api to fetch game data
 async function getGame(id: string): Promise<Game> {
-    const res: Response = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL}/api/games/${id}`);
+    const clientBaseUrl = (process.env.NEXT_PUBLIC_CLIENT_URL || 'http://localhost:3000').replace(/\/$/, '');
+    const res: Response = await fetch(`${clientBaseUrl}/api/games/${id}`);
     if (!res.ok) { throw new Error('Could not fetch game') };
     return res.json();
 }

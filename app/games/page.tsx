@@ -6,8 +6,9 @@ import { AuthCheck } from "../components/authCheck";
 export const dynamic = 'force-dynamic';
 
 async function getGames(): Promise<Game[]> {
+    const clientBaseUrl = (process.env.NEXT_PUBLIC_CLIENT_URL || 'http://localhost:3000').replace(/\/$/, '');
      // use router to call server api
-    const res: Response = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL}/api/games`);
+    const res: Response = await fetch(`${clientBaseUrl}/api/games`);
     if (!res.ok) { throw new Error('Failed to fetch games') };
 
     // response is ok, so convert json to array of Game objects

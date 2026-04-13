@@ -1,7 +1,8 @@
 // file used to make api calls to server at /api/v1/games (GET and POST)
 export async function GET() {
+    const serverBaseUrl = (process.env.SERVER_URL || process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:4000').replace(/\/$/, '');
     // make get req to fetch all games from express api.  read domain from env var
-    const res: Response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/games`);
+    const res: Response = await fetch(`${serverBaseUrl}/api/v1/games`);
 
     //api call fails
     if (!res.ok) {
@@ -14,6 +15,7 @@ export async function GET() {
 };
 
 export async function POST(req: Request) {
+    const serverBaseUrl = (process.env.SERVER_URL || process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:4000').replace(/\/$/, '');
     // read request body as json
     const body = await req.json();
 
@@ -21,7 +23,7 @@ export async function POST(req: Request) {
     const cookieHeader: string = req.headers.get('cookie') || '';
 
     // call server api
-    const res: Response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/games`, {
+    const res: Response = await fetch(`${serverBaseUrl}/api/v1/games`, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',

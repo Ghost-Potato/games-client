@@ -60,7 +60,7 @@ export default function EditGameForm({game} : {game: Game}){
         }
         else{
             //cal/ route 
-            const res: Response = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL}/api/games/${game._id}`, {
+            const res: Response = await fetch(`/api/games/${game._id}`, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
