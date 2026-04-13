@@ -7,13 +7,20 @@ export const dynamic = 'force-dynamic';
 
 async function getGames(): Promise<Game[]> {
     const clientBaseUrl = (process.env.NEXT_PUBLIC_CLIENT_URL || 'http://localhost:3000').replace(/\/$/, '');
-     // use router to call server api
-    const res: Response = await fetch(`${clientBaseUrl}/api/games`);
-    if (!res.ok) { throw new Error('Failed to fetch games') };
+    try {
+        // use router to call server api
+        const res: Response = await fetch(`${clientBaseUrl}/api/games`);
+        if (!res.ok) {
+            return [];
+        }
 
-    // response is ok, so convert json to array of Game objects
-    const games: Game[] = await res.json();
-    return games;
+        // response is ok, so convert json to array of Game objects
+        const games: Game[] = await res.json();
+        return games;
+    }
+    catch {
+        return [];
+    }
 }
 
 export default async function Games() {
@@ -27,6 +34,7 @@ export default async function Games() {
             <AuthCheck>
                 <Link href="/games/create" className="linkButton">Add a New Game</Link>
             </AuthCheck>
+            {games.length === 0 && <p>No games available right now.</p>}
             <ul>
                 {games.map((game) => (
                     <li key={game._id} className="card">
