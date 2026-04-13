@@ -14,32 +14,33 @@ async function getGame(id: string): Promise<Game> {
 export default async function GameDetails({ params } : {params: Promise<{ id: string }>} ) {
     // try to fetch game before rendering output
     const { id } = await params;
+    let game: Game | null = null;
 
     try {
-        const game = await getGame(id);
-
-        return (
-            <main>
-                <h1>Game Details</h1>
-                <article className="card">
-                    <h3>{game.title}</h3>
-                    <p>{game.developer}</p>
-                    <p>{game.genre}</p>
-                    <p>{game.price}</p>
-                    <p>Rating: {game.rating}</p>
-                    <AuthCheck>
-                        <Link href={`/games/edit/${game._id}`} className="linkButton">Edit</Link>
-                        <DeleteGameButton id={game._id} />
-                    </AuthCheck>
-                </article>
-            </main>
-        );
+        game = await getGame(id);
     }
-    catch (Error) {
+    catch {
         return (
             <main>
                 <h1>Game Not Found</h1>
             </main>
         );
-    }    
+    }
+
+    return (
+        <main>
+            <h1>Game Details</h1>
+            <article className="card">
+                <h3>{game.title}</h3>
+                <p>{game.developer}</p>
+                <p>{game.genre}</p>
+                <p>{game.price}</p>
+                <p>Rating: {game.rating}</p>
+                <AuthCheck>
+                    <Link href={`/games/edit/${game._id}`} className="linkButton">Edit</Link>
+                    <DeleteGameButton id={game._id} />
+                </AuthCheck>
+            </article>
+        </main>
+    );
 }
