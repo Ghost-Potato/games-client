@@ -5,7 +5,7 @@ import { useAppContext } from "@/app/components/appContext";
 
 export default function CreateGame(){
     //authentication global context
-    const { setIsAuthenticated, isAuthenticated } = useAppContext();
+    const { isAuthenticated } = useAppContext();
     
     //instantiate router for redirecting after successful save
     const router = useRouter();
