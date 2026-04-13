@@ -2,10 +2,15 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Game } from "@/types/game";
+import { useAppContext } from "@/app/components/appContext";
 
 export default function EditGameForm({game} : {game: Game}){
+    //authentication global context
+    const { isAuthenticated } = useAppContext();
+
     //instantiate router for redirecting after successful save
     const router = useRouter();
+
     //state vars
     const [title, setTitle] = useState<string>(game.title || ''); //can leave out the || for required items
     const [developer, setDeveloper] = useState<string>(game.developer || '');
@@ -15,6 +20,7 @@ export default function EditGameForm({game} : {game: Game}){
 
     //state var key/val dictionary of validation errors inform
     const [errors, setErrors] = useState<Record<string,string>>({});
+
     //form val
     const validate = (): boolean => {
         const newErrors: Record<string, string> = {};
@@ -29,6 +35,7 @@ export default function EditGameForm({game} : {game: Game}){
         if (!genre.trim()){
             newErrors.title = 'Genre is required';
         }
+
         //update error state dict
         setErrors(newErrors);
 
@@ -43,6 +50,7 @@ export default function EditGameForm({game} : {game: Game}){
 
     //submit
     const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+
         //disable form's default behavious; use TS to process instead
         e.preventDefault();
 
@@ -65,9 +73,17 @@ export default function EditGameForm({game} : {game: Game}){
             }
 
             //refresh games list
+            
             router.push('/games');
         }
     }
+    
+        if(!isAuthenticated) return(
+        <main>
+            <h1>Unauthorized</h1>
+            <p>You must be logged in to create a game.</p>
+        </main>
+    )
 
     return(
         <main>

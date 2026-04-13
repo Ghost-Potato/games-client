@@ -1,5 +1,6 @@
 import { Game } from "@/types/game";
 import Link from "next/link";
+import { AuthCheck } from "../components/authCheck";
 
 //skip pre-rendering to fix Vercel bug
 export const dynamic = 'force-dynamic';
@@ -21,7 +22,10 @@ export default async function Games() {
    return (
         <main>
             <h1>Our Games</h1>
-            <Link href="/games/create" className="linkButton">Add a New Game</Link>
+            {/* Authentication Check instead of using a conditional statement */}
+            <AuthCheck>
+                <Link href="/games/create" className="linkButton">Add a New Game</Link>
+            </AuthCheck>
             <ul>
                 {games.map((game) => (
                     <li key={game._id} className="card">

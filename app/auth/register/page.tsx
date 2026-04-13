@@ -35,14 +35,14 @@ export default function Register(){
         if(!validate()) return;
 
         //form valid
-        const res: Response = await fetch (`${process.env.NEXT_PUBLIC_CLIENT_URL}/api/auth/register`, {
+        const res: Response = await fetch('/api/auth/register', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({username, password})
         });
 
         if(!res.ok){
-            alert(res.text());
+            alert(await res.text());
             return;
         }
 
@@ -63,8 +63,8 @@ export default function Register(){
                 <label htmlFor="password">Re-enter Password:</label>
                 <input type="password" id="confirmPassword" name="confirmPassword"value= {confirm} onChange={(e) => setConfirm(e.target.value)}></input>
                 {errors.confirm && <span className="error">{errors.confirm}</span>}
+                <button type="submit">Register</button>
             </form>
-            <button>Register</button>
         </main>
     )
 }

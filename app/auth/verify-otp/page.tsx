@@ -5,15 +5,15 @@ import { useRouter } from "next/navigation";
 import { useAppContext } from "@/app/components/appContext";
 
 
-export default function Login(){
+export default function VerifyOTP(){
     const router = useRouter();
 
     //app context for authentication state
-    const { setAppUsername } = useAppContext();
+    const { setIsAuthenticated, appUsername } = useAppContext();
 
     //state vars
-    const [username, setUsername] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+    const [code, setCode] = useState<string>('');
+
 
     //state key/val dict of val errors
     const [errors, setErrors] = useState<Record<string, string>>({});
@@ -22,8 +22,7 @@ export default function Login(){
     const validate = () : boolean => {
         const newErrors: Record<string, string> = {};
 
-        if(!username.trim()) newErrors.username = 'Username required';
-        if(!password.trim()) newErrors.password = 'Password required';
+        if(!code.trim()) newErrors.code = 'OTP required';
 
         setErrors(newErrors);
 
@@ -36,11 +35,19 @@ export default function Login(){
         e.preventDefault();
         if(!validate()) return;
 
+        const username = appUsername?.toString();
+
+        if(!username){
+            setErrors({ code: 'Session expired. Please log in again.' });
+            router.push('/auth/login');
+            return;
+        }
+
         //form valid
-        const res: Response = await fetch('/api/auth/login', {
+        const res: Response = await fetch('/api/auth/verify-otp', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({username, password})
+            body: JSON.stringify({ code, username, appUsername: username })
         });
 
         if(!res.ok){
@@ -50,21 +57,18 @@ export default function Login(){
 
 
         //ok => set global vars then games
-        setAppUsername(username);
-        // setIsAuthenticated(true); => set in verify-otp after successful OTP verification
-        router.push('/auth/verify-otp');
+        // setAppUsername(username);
+        setIsAuthenticated(true);
+        router.push('/games');
     }
 
     return(
         <main>
             <h1>Login</h1>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="username">Username:</label>
-                <input type="text" id="username" name="username" value= {username} onChange={(e) => setUsername(e.target.value)}></input>
-                {errors.username && <span className="error">{errors.username}</span>}
-                <label htmlFor="password">Password:</label>
-                <input type="password" id="password" name="password" value= {password} onChange={(e) => setPassword(e.target.value)}></input>
-                {errors.password && <span className="error">{errors.password}</span>}
+                <label htmlFor="code">OTP:</label>
+                <input type="text" id="code" name="code" value= {code} onChange={(e) => setCode(e.target.value)}></input>
+                {errors.code && <span className="error">{errors.code}</span>}
                 <button type="submit">Login</button>
             </form>
         </main>

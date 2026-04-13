@@ -1,8 +1,12 @@
 'use client';
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAppContext } from "@/app/components/appContext";
 
 export default function CreateGame(){
+    //authentication global context
+    const { setIsAuthenticated, isAuthenticated } = useAppContext();
+    
     //instantiate router for redirecting after successful save
     const router = useRouter();
     //state vars
@@ -66,6 +70,13 @@ export default function CreateGame(){
             router.push('/games');
         }
     }
+
+    if(!isAuthenticated) return(
+        <main>
+            <h1>Unauthorized</h1>
+            <p>You must be logged in to create a game.</p>
+        </main>
+    )
 
     return(
         <main>

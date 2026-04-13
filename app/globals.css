@@ -112,3 +112,7 @@ button.delete {
   background-color: firebrick;
   color: white;
 }
+
+.navLink {
+  cursor: pointer;
+}
